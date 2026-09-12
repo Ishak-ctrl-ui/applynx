@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AppKittie — Market Intelligence & App Analytics</title>
+  <title>AppLynx — Market Intelligence & App Analytics</title>
   <link rel="icon" href="assets/logo.png" type="image/png" />
-  <link rel="stylesheet" href="assets/css/styles.css?v=5" />
+  <link rel="stylesheet" href="assets/css/styles.css?v=6" />
 </head>
 <body>
 
@@ -15,8 +15,8 @@
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
       <div class="sidebar-brand" id="brandHome">
-        <img src="assets/logo.png" class="brand-cat-img" alt="AppKittie Logo" />
-        <div class="logo-text">appkittie<span>.</span></div>
+        <img src="assets/logo.png" class="brand-cat-img" alt="AppLynx Logo" />
+        <div class="logo-text">applynx<span>.</span></div>
       </div>
       <button class="sidebar-toggle-btn" id="btnToggleSidebar" title="Collapse sidebar">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
@@ -397,16 +397,10 @@
           </div>
         </div>
 
-        <!-- Rank vs Revenue Curve -->
-        <div class="chart-card-box">
-          <div class="chart-title-row">
-            <h3>Rank vs. Revenue Curve</h3>
-            <span class="chart-badge">US Top Grossing (Log Scale)</span>
-          </div>
-          <div id="curveChartBox" style="min-height:240px;position:relative">
-            <canvas id="curveCanvas" width="900" height="240" style="width:100%;height:auto"></canvas>
-          </div>
-          <div id="curveNote" style="font-size:12px;color:var(--txt-muted);margin-top:8px"></div>
+        <!-- Market Summary Highlights -->
+        <div class="page-card" style="margin-top:16px">
+          <h3 class="card-heading" style="font-size:15px">Global App Store Intelligence Summary</h3>
+          <p class="card-desc">Market estimates aggregated across iOS Top Grossing &amp; Genre charts. Tracked daily for revenue distribution, download velocity, and 30-day growth trajectories.</p>
         </div>
       </section>
 
@@ -428,13 +422,13 @@
       <!-- ==================== PAGE: ABOUT PIPELINE ==================== -->
       <section class="page-view" id="p-about">
         <div class="page-card">
-          <h2 class="card-heading">AppKittie Free Clone Architecture</h2>
+          <h2 class="card-heading">AppLynx Market Intelligence Architecture</h2>
           <p class="card-desc" style="line-height:1.7">
-            This application is built as a 100% free, high-performance market intelligence clone of AppKittie.<br><br>
-            • <b>Library Build:</b> Ingests ~430 Apple RSS chart feeds across genres and major regions, deduplicating to over 6,000+ top apps enriched with official metadata.<br>
-            • <b>Revenue &amp; Download Engine:</b> Calibrated Power-Law / Log-Rank algorithms factoring rating count velocity, category revenue multipliers, and chart tier discounts.<br>
+            AppLynx is a 100% free, high-performance mobile market intelligence and ASO analytics platform.<br><br>
+            • <b>Library Build:</b> Ingests ~430 Apple RSS chart feeds across genres and major regions, deduplicating to over 6,500+ top apps enriched with official metadata.<br>
+            • <b>Revenue &amp; Download Engine:</b> Calibrated Power-Law algorithms factoring rating count velocity, category multipliers, and chart tier discounts.<br>
             • <b>Growth 30D Sparklines:</b> High-performance inline cubic bezier vector curves rendering live trends directly in every table cell with 0 external dependencies.<br>
-            • <b>Ad &amp; Creative Intelligence:</b> Scrapes and parses live YouTube creative footprints and direct link-outs to official Meta &amp; Google ad libraries.
+            • <b>Multi-Network Ad Intelligence:</b> Active ad creative cards tracking Meta (Facebook &amp; Instagram), Google Ads, TikTok Creative Center, and YouTube campaigns.
           </p>
         </div>
       </section>
@@ -477,9 +471,9 @@
         <div class="stat-box-sub" id="dRateSub">—</div>
       </div>
       <div class="stat-box">
-        <div class="stat-box-label">YouTube Footprint</div>
+        <div class="stat-box-label">Ad &amp; Viral Footprint</div>
         <div class="stat-box-val" id="dYt">—</div>
-        <div class="stat-box-sub" id="dYtSub">views</div>
+        <div class="stat-box-sub" id="dYtSub">cross-network reach</div>
       </div>
     </div>
 
@@ -488,7 +482,7 @@
       <button class="detail-tab-btn active" data-tab="ov">Overview</button>
       <button class="detail-tab-btn" data-tab="shots">Screenshots</button>
       <button class="detail-tab-btn" data-tab="revs">Reviews</button>
-      <button class="detail-tab-btn" data-tab="ads">Ads &amp; Viral</button>
+      <button class="detail-tab-btn" data-tab="ads">Ad Intelligence &amp; Creatives</button>
     </div>
 
     <!-- Tab Contents -->
@@ -499,11 +493,13 @@
       <div class="screenshots-scroll" id="dShots"></div>
     </div>
     <div id="tab-revs" class="tab-panel" style="display:none">
-      <div id="dRevs" style="font-size:13px;color:var(--txt-muted)">Click to load reviews.</div>
-      <button class="btn-clear-filters" id="btnLoadReviews" style="margin-top:10px">Load Recent Reviews</button>
+      <div id="dRevsContainer">
+        <div id="dRevsSummary"></div>
+        <div id="dRevsList"></div>
+      </div>
     </div>
     <div id="tab-ads" class="tab-panel" style="display:none">
-      <div id="dAds">Loading ad insights…</div>
+      <div id="dAds"></div>
     </div>
 
   </div>

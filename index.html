@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AppKittie — Market Intelligence & App Analytics</title>
+  <link rel="icon" href="assets/logo.png" type="image/png" />
+  <link rel="stylesheet" href="assets/css/styles.css?v=5" />
+</head>
+<body>
+
+<div class="app-container">
+
+  <!-- ==================== SIDEBAR (DARK) ==================== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-brand" id="brandHome">
+        <img src="assets/logo.png" class="brand-cat-img" alt="AppKittie Logo" />
+        <div class="logo-text">appkittie<span>.</span></div>
+      </div>
+      <button class="sidebar-toggle-btn" id="btnToggleSidebar" title="Collapse sidebar">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+    </div>
+
+    <div class="sidebar-nav">
+      <!-- Section: EXPLORE -->
+      <div class="nav-group">
+        <div class="nav-group-title">Explore</div>
+        <button class="nav-item active" data-p="discover">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          <span>Apps</span>
+        </button>
+        <button class="nav-item" data-p="ads">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+          <span>Ads</span>
+        </button>
+        <button class="nav-item" data-p="charts">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          <span>Organic</span>
+        </button>
+        <button class="nav-item" data-p="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <span>Store Search</span>
+        </button>
+      </div>
+
+      <!-- Section: FAVORITES -->
+      <div class="nav-group">
+        <div class="nav-group-title">Favorites</div>
+        <button class="nav-item" data-p="watch">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          <span>All favorites</span>
+          <span class="badge-pill" id="sideWatchCount">0</span>
+        </button>
+      </div>
+
+      <!-- Section: ASO TRACKING -->
+      <div class="nav-group">
+        <div class="nav-group-title">ASO Tracking</div>
+        <button class="nav-item" data-p="aso">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 2l-2 2m-1.5 1.5L14 9m0 0l-3 3m3-3l-2-2m-3 7l-2 2a2.828 2.828 0 1 1-4-4l2-2m7 7l-2-2"></path></svg>
+          <span>Keyword Explorer</span>
+        </button>
+      </div>
+
+      <!-- Section: TOOLS -->
+      <div class="nav-group">
+        <div class="nav-group-title">Tools</div>
+        <button class="nav-item" data-p="charts">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+          <span>Market Breakdown</span>
+        </button>
+        <button class="nav-item" data-p="about">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          <span>Data Pipeline</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Sidebar footer status -->
+    <div class="sidebar-footer">
+      <div style="display:flex;align-items:center;margin-bottom:4px">
+        <span class="lib-status-dot"></span>
+        <span class="sidebar-footer-text" id="sideLibStatus">6,418 apps loaded</span>
+      </div>
+      <div class="sidebar-footer-text" style="color:#64748b;font-size:10.5px" id="sideBuildInfo">SQLite library live</div>
+    </div>
+  </aside>
+
+  <!-- ==================== MAIN DASHBOARD (LIGHT THEME) ==================== -->
+  <main class="main-wrapper">
+
+    <!-- Top Canvas Header -->
+    <header class="canvas-header">
+      <div class="header-left">
+        <h1 class="canvas-title" id="pageTitleHeading">Explore Apps</h1>
+        <span class="filter-counter-badge" id="activeFilterBadge">0 filters active</span>
+      </div>
+      <div class="header-actions">
+        <button class="btn-action-icon" id="btnRefresh" title="Refresh snapshots">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+        </button>
+        <button class="btn-clear-filters" id="btnClearFilters">Clear</button>
+        <button class="btn-export-green" id="btnExport">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          <span>Export</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Content Stage -->
+    <div class="content-stage">
+
+      <!-- ==================== PAGE: DISCOVER (EXPLORE APPS) ==================== -->
+      <section class="page-view active" id="p-discover">
+
+        <!-- Search Omnibox -->
+        <div class="search-omnibox-container">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" class="search-input" id="q" placeholder="Search apps, developers, descriptions…" />
+          <kbd class="search-kbd-shortcut" title="Press Ctrl+K or / to search"><span class="kbd-key">⌘</span><span class="kbd-key">K</span></kbd>
+          <select class="search-scope-select" id="searchScope">
+            <option value="title" selected>Title</option>
+            <option value="dev">Developer</option>
+            <option value="bundle">Bundle ID</option>
+            <option value="all">All Fields</option>
+          </select>
+        </div>
+
+        <!-- Filter Pills Bar -->
+        <div class="filter-pills-bar">
+          <!-- Time -->
+          <div class="filter-pill" id="pillTime" data-filter="time">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span class="pill-label">Time</span>
+            <span class="filter-pill-chevron">▼</span>
+            <div class="popover-dropdown" id="popTime">
+              <div class="popover-title">Release Timeline</div>
+              <div class="popover-options-list">
+                <div class="popover-opt selected" data-val="">All Time</div>
+                <div class="popover-opt" data-val="2025-01-01">After Jan 1, 2025</div>
+                <div class="popover-opt" data-val="2024-01-01">After Jan 1, 2024</div>
+                <div class="popover-opt" data-val="2023-01-01">After Jan 1, 2023</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Store -->
+          <div class="filter-pill" id="pillStore" data-filter="store">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+            <span class="pill-label">Store</span>
+            <span class="filter-pill-chevron">▼</span>
+            <div class="popover-dropdown" id="popStore">
+              <div class="popover-title">Store & Region</div>
+              <div class="popover-options-list">
+                <div class="popover-opt selected" data-val="">All Stores (iOS)</div>
+                <div class="popover-opt" data-val="1">🥇 US Top Grossing</div>
+                <div class="popover-opt" data-val="2">🥈 US Genre Grossing</div>
+                <div class="popover-opt" data-val="3">🥉 Intl Grossing</div>
+                <div class="popover-opt" data-val="4">📋 Free / Paid Charts</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category -->
+          <div class="filter-pill" id="pillCat" data-filter="cat">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+            <span class="pill-label" id="pillCatLabel">Category</span>
+            <span class="filter-pill-chevron">▼</span>
+            <div class="popover-dropdown" id="popCat">
+              <div class="popover-title">Select Category</div>
+              <div class="popover-options-list" id="popCatList">
+                <div class="popover-opt selected" data-val="">All Categories</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Exclude Categories -->
+          <div class="filter-pill" id="pillExclude" data-filter="exclude">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+            <span class="pill-label" id="pillExcludeLabel">Exclude</span>
+            <span class="filter-pill-chevron">▼</span>
+            <div class="popover-dropdown" id="popExclude">
+              <div class="popover-title">Quick Exclude</div>
+              <div class="popover-options-list">
+                <div class="popover-opt" data-ex="Games">🎮 Exclude: Games</div>
+                <div class="popover-opt" data-ex="Entertainment">🎬 Exclude: Entertainment</div>
+                <div class="popover-opt" data-ex="Productivity">📁 Exclude: Productivity</div>
+                <div class="popover-opt" data-ex="Photo & Video">📷 Exclude: Photo & Video</div>
+                <div class="popover-opt" data-ex="Music">🎵 Exclude: Music</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Price -->
+          <div class="filter-pill" id="pillPrice" data-filter="price">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            <span class="pill-label">Price</span>
+            <span class="filter-pill-chevron">▼</span>
+            <div class="popover-dropdown" id="popPrice">
+              <div class="popover-title">App Price</div>
+              <div class="popover-options-list">
+                <div class="popover-opt selected" data-val="">All Prices</div>
+                <div class="popover-opt" data-val="free">Free Only</div>
+                <div class="popover-opt" data-val="paid">Paid Only</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Min Revenue -->
+          <div class="filter-pill" id="pillRev" data-filter="rev">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><line x1="12" y1="18" x2="12" y2="20"></line><line x1="12" y1="4" x2="12" y2="6"></line></svg>
+            <span class="pill-label" id="pillRevLabel">Min revenue</span>
+            <span class="filter-pill-chevron">▼</span>
+            <div class="popover-dropdown" id="popRev">
+              <div class="popover-title">Monthly Revenue Floor</div>
+              <div class="popover-options-list">
+                <div class="popover-opt selected" data-val="0">Any Revenue</div>
+                <div class="popover-opt" data-val="100000">&gt;$100K / mo</div>
+                <div class="popover-opt" data-val="500000">&gt;$500K / mo</div>
+                <div class="popover-opt" data-val="1000000">&gt;$1M / mo</div>
+                <div class="popover-opt" data-val="3000000">&gt;$3M / mo</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Min Downloads -->
+          <div class="filter-pill" id="pillDl" data-filter="dl">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            <span class="pill-label" id="pillDlLabel">Min downloads</span>
+            <span class="filter-pill-chevron">▼</span>
+            <div class="popover-dropdown" id="popDl">
+              <div class="popover-title">Monthly Downloads Floor</div>
+              <div class="popover-options-list">
+                <div class="popover-opt selected" data-val="0">Any Downloads</div>
+                <div class="popover-opt" data-val="50000">&gt;50K / mo</div>
+                <div class="popover-opt" data-val="200000">&gt;200K / mo</div>
+                <div class="popover-opt" data-val="1000000">&gt;1M / mo</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Min Rating -->
+          <div class="filter-pill" id="pillRate" data-filter="rate">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            <span class="pill-label" id="pillRateLabel">Min rating</span>
+            <span class="filter-pill-chevron">▼</span>
+            <div class="popover-dropdown" id="popRate">
+              <div class="popover-title">Minimum Star Rating</div>
+              <div class="popover-options-list">
+                <div class="popover-opt selected" data-val="0">Any Rating</div>
+                <div class="popover-opt" data-val="4.0">★ 4.0+</div>
+                <div class="popover-opt" data-val="4.5">★ 4.5+</div>
+                <div class="popover-opt" data-val="4.7">★ 4.7+</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sort -->
+          <div class="filter-pill" id="pillSort" data-filter="sort">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+            <span class="pill-label" id="pillSortLabel">Sort: Revenue</span>
+            <span class="filter-pill-chevron">▼</span>
+            <div class="popover-dropdown" id="popSort">
+              <div class="popover-title">Sort Order</div>
+              <div class="popover-options-list">
+                <div class="popover-opt selected" data-val="rev">Revenue high → low</div>
+                <div class="popover-opt" data-val="dl">Downloads high → low</div>
+                <div class="popover-opt" data-val="growth">Growth % high → low</div>
+                <div class="popover-opt" data-val="ratings">Most Ratings</div>
+                <div class="popover-opt" data-val="rank">Gross Rank</div>
+                <div class="popover-opt" data-val="new">Newest Release</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active Filter Tags Row -->
+        <div class="active-tags-row" id="activeTagsRow"></div>
+
+        <!-- AppKittie Data Table -->
+        <div class="table-card">
+          <div class="table-responsive">
+            <table class="appkittie-table">
+              <thead>
+                <tr>
+                  <th class="sortable" data-sort="rank" title="Sort by rank">App <span class="sort-icon">↕</span></th>
+                  <th>Category</th>
+                  <th class="align-right sortable" data-sort="dl" title="Sort by monthly downloads">Downloads <span class="sort-icon">↕</span></th>
+                  <th class="align-right sortable active-sort" data-sort="rev" title="Sort by monthly revenue">Revenue <span class="sort-icon">↓</span></th>
+                  <th class="align-right sortable" data-sort="growth" title="Sort by 30-day growth">Growth 30D <span class="sort-icon">↕</span></th>
+                  <th class="align-right sortable" data-sort="ratings" title="Sort by ratings count">Rating <span class="sort-icon">↕</span></th>
+                  <th class="align-right sortable" data-sort="new" title="Sort by release date">Released <span class="sort-icon">↕</span></th>
+                  <th class="align-right">Last Update</th>
+                  <th class="align-center"></th>
+                </tr>
+              </thead>
+              <tbody id="tbody">
+                <tr><td colspan="9" style="text-align:center;padding:32px;color:var(--txt-muted)">Loading apps from library…</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Table Footer Pagination -->
+          <div class="table-footer">
+            <div id="tableRowCount">Showing 0 apps</div>
+            <div class="pager-controls">
+              <button class="btn-pager" id="pgPrev">← Prev</button>
+              <span id="pgInfo" style="font-weight:600;font-variant-numeric:tabular-nums">page 1</span>
+              <button class="btn-pager" id="pgNext">Next →</button>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ==================== PAGE: STORE LIVE SEARCH ==================== -->
+      <section class="page-view" id="p-search">
+        <div class="page-card">
+          <h2 class="card-heading">Whole-Store Live Search</h2>
+          <p class="card-desc">Query Apple's live Search API directly (up to 200 hits). Discover rival apps and import them into your local intelligence library.</p>
+          <div style="display:flex;gap:10px;margin-top:14px">
+            <input type="text" class="search-input" id="sq" placeholder="e.g. habit tracker, ai photo, prayer, calorie counter…" style="background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:9px 12px" />
+            <button class="btn-export-green" id="btnSearch" style="white-space:nowrap">Search Store</button>
+            <button class="btn-clear-filters" id="btnImport" style="white-space:nowrap">+ Import All Hits</button>
+          </div>
+        </div>
+        <div class="page-card" style="margin-top:14px">
+          <h3 class="card-heading" style="font-size:14px">Search Results</h3>
+          <div id="searchOut" style="color:var(--txt-muted);font-size:13px">Type a search term above and hit Search.</div>
+        </div>
+      </section>
+
+      <!-- ==================== PAGE: AD TRACKER ==================== -->
+      <section class="page-view" id="p-ads">
+        <div class="page-card">
+          <h2 class="card-heading">Creative Ad &amp; Viral Tracker</h2>
+          <p class="card-desc">Tracks YouTube video footprint and creatives live. Directly integrates with official Meta Ad Library, Google Ads Transparency, and TikTok Creative Center.</p>
+          <div style="display:flex;gap:10px;margin-top:14px;max-width:480px">
+            <input type="text" class="search-input" id="aq" placeholder="e.g. Cal AI, Duolingo, ChatGPT…" style="background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:9px 12px" />
+            <button class="btn-export-green" id="btnAds" style="white-space:nowrap">Track Ads</button>
+          </div>
+        </div>
+        <div class="page-card" style="margin-top:14px">
+          <div id="adsOut" style="color:var(--txt-muted);font-size:13px">Enter an app name above to track live creatives.</div>
+        </div>
+      </section>
+
+      <!-- ==================== PAGE: WATCHLIST / FAVORITES ==================== -->
+      <section class="page-view" id="p-watch">
+        <div class="page-card">
+          <h2 class="card-heading">Favorites &amp; Watchlist</h2>
+          <p class="card-desc">Your tracked apps monitored continuously over time for revenue velocity and ad campaigns.</p>
+        </div>
+        <div class="table-card">
+          <div class="table-responsive">
+            <table class="appkittie-table">
+              <thead>
+                <tr>
+                  <th>App</th>
+                  <th>Category</th>
+                  <th class="align-right">Revenue</th>
+                  <th class="align-right">Downloads</th>
+                  <th class="align-right">Growth 30D</th>
+                  <th class="align-right">Rating</th>
+                  <th class="align-center">Remove</th>
+                </tr>
+              </thead>
+              <tbody id="wtbody">
+                <tr><td colspan="7" style="text-align:center;padding:32px;color:var(--txt-muted)">No favorited apps yet. Click the ★ icon on any row to track it.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== PAGE: CHARTS & MARKET BREAKDOWN ==================== -->
+      <section class="page-view" id="p-charts">
+        <div class="charts-grid-2">
+          <!-- Revenue Distribution -->
+          <div class="chart-card-box">
+            <div class="chart-title-row">
+              <h3>Revenue Distribution</h3>
+              <span class="chart-badge">Whole Library</span>
+            </div>
+            <div id="revDistBox" style="min-height:220px">Loading chart…</div>
+          </div>
+
+          <!-- Category Breakdown -->
+          <div class="chart-card-box">
+            <div class="chart-title-row">
+              <h3>Top Categories by Revenue</h3>
+              <span class="chart-badge">Monthly Est.</span>
+            </div>
+            <div id="catDistBox" style="min-height:220px">Loading chart…</div>
+          </div>
+        </div>
+
+        <!-- Rank vs Revenue Curve -->
+        <div class="chart-card-box">
+          <div class="chart-title-row">
+            <h3>Rank vs. Revenue Curve</h3>
+            <span class="chart-badge">US Top Grossing (Log Scale)</span>
+          </div>
+          <div id="curveChartBox" style="min-height:240px;position:relative">
+            <canvas id="curveCanvas" width="900" height="240" style="width:100%;height:auto"></canvas>
+          </div>
+          <div id="curveNote" style="font-size:12px;color:var(--txt-muted);margin-top:8px"></div>
+        </div>
+      </section>
+
+      <!-- ==================== PAGE: ASO KEYWORD EXPLORER ==================== -->
+      <section class="page-view" id="p-aso">
+        <div class="page-card">
+          <h2 class="card-heading">ASO Keyword Explorer</h2>
+          <p class="card-desc">Analyze organic keyword competition, difficulty, and opportunity score against the top ranking apps in real time.</p>
+          <div style="display:flex;gap:10px;margin-top:14px;max-width:480px">
+            <input type="text" class="search-input" id="kw" placeholder="e.g. calorie tracker, sleep sound, budget…" style="background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:9px 12px" />
+            <button class="btn-export-green" id="btnKw" style="white-space:nowrap">Analyze Keyword</button>
+          </div>
+        </div>
+        <div class="page-card" style="margin-top:14px">
+          <div id="kwOut" style="color:var(--txt-muted);font-size:13px">Enter a keyword above to inspect organic difficulty.</div>
+        </div>
+      </section>
+
+      <!-- ==================== PAGE: ABOUT PIPELINE ==================== -->
+      <section class="page-view" id="p-about">
+        <div class="page-card">
+          <h2 class="card-heading">AppKittie Free Clone Architecture</h2>
+          <p class="card-desc" style="line-height:1.7">
+            This application is built as a 100% free, high-performance market intelligence clone of AppKittie.<br><br>
+            • <b>Library Build:</b> Ingests ~430 Apple RSS chart feeds across genres and major regions, deduplicating to over 6,000+ top apps enriched with official metadata.<br>
+            • <b>Revenue &amp; Download Engine:</b> Calibrated Power-Law / Log-Rank algorithms factoring rating count velocity, category revenue multipliers, and chart tier discounts.<br>
+            • <b>Growth 30D Sparklines:</b> High-performance inline cubic bezier vector curves rendering live trends directly in every table cell with 0 external dependencies.<br>
+            • <b>Ad &amp; Creative Intelligence:</b> Scrapes and parses live YouTube creative footprints and direct link-outs to official Meta &amp; Google ad libraries.
+          </p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+</div>
+
+<!-- ==================== APP DETAIL MODAL / DRAWER ==================== -->
+<div class="modal-backdrop" id="detailModal">
+  <div class="modal-container">
+    <button class="modal-close-btn" id="modalClose">✕</button>
+
+    <div class="detail-header-flex">
+      <img id="dIcon" class="detail-app-icon" src="" alt="" />
+      <div style="flex:1;overflow:hidden">
+        <h2 id="dTitle" style="font-size:20px;font-weight:800;color:var(--txt-main);margin-bottom:4px"></h2>
+        <div id="dSub" style="font-size:13px;color:var(--txt-muted)"></div>
+        <div id="dMeta" style="margin-top:8px;display:flex;gap:6px;align-items:center;flex-wrap:wrap"></div>
+      </div>
+      <button class="btn-clear-filters" id="btnTrackDetail">＋ Track</button>
+    </div>
+
+    <!-- Quick Stats Grid -->
+    <div class="detail-stats-grid">
+      <div class="stat-box">
+        <div class="stat-box-label">Est. Monthly Revenue</div>
+        <div class="stat-box-val" id="dRev" style="color:var(--green-dark)">—</div>
+        <div class="stat-box-sub" id="dGrowth">—</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-box-label">Est. Monthly Downloads</div>
+        <div class="stat-box-val" id="dDl">—</div>
+        <div class="stat-box-sub">active installs</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-box-label">User Rating</div>
+        <div class="stat-box-val" id="dRate" style="color:var(--amber-dark)">—</div>
+        <div class="stat-box-sub" id="dRateSub">—</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-box-label">YouTube Footprint</div>
+        <div class="stat-box-val" id="dYt">—</div>
+        <div class="stat-box-sub" id="dYtSub">views</div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="detail-tabs-bar">
+      <button class="detail-tab-btn active" data-tab="ov">Overview</button>
+      <button class="detail-tab-btn" data-tab="shots">Screenshots</button>
+      <button class="detail-tab-btn" data-tab="revs">Reviews</button>
+      <button class="detail-tab-btn" data-tab="ads">Ads &amp; Viral</button>
+    </div>
+
+    <!-- Tab Contents -->
+    <div id="tab-ov" class="tab-panel">
+      <div id="dDesc" style="font-size:13px;line-height:1.6;color:var(--txt-sec);white-space:pre-wrap"></div>
+    </div>
+    <div id="tab-shots" class="tab-panel" style="display:none">
+      <div class="screenshots-scroll" id="dShots"></div>
+    </div>
+    <div id="tab-revs" class="tab-panel" style="display:none">
+      <div id="dRevs" style="font-size:13px;color:var(--txt-muted)">Click to load reviews.</div>
+      <button class="btn-clear-filters" id="btnLoadReviews" style="margin-top:10px">Load Recent Reviews</button>
+    </div>
+    <div id="tab-ads" class="tab-panel" style="display:none">
+      <div id="dAds">Loading ad insights…</div>
+    </div>
+
+  </div>
+</div>
+
+<script src="assets/js/app.js?v=5"></script>
+</body>
+</html>

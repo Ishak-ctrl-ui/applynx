@@ -1,0 +1,37 @@
+name: Daily AppKittie Intelligence Sync
+
+on:
+  schedule:
+    # Runs everyday at 06:00 UTC (runs automatically in background)
+    - cron: '0 6 * * *'
+  workflow_dispatch: # Allows manual 1-click trigger from GitHub Actions tab
+
+jobs:
+  update-app-intelligence:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Needed to push updated data/apps.json back to repo
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Daily AppKittie Ingestion & Export
+        run: |
+          python build_daily.py
+
+      - name: Commit & Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/apps.json data/appkitty.db
+          if git diff --staged --quiet; then
+            echo "No data changes to commit."
+          else
+            git commit -m "Auto-update daily app intelligence snapshot [skip ci]"
+            git push
+          fi
